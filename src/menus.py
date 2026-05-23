@@ -22,3 +22,10 @@ MENU_ESCOLHA_ANIMAL = """
 Para escolher o animal desejado escolha o valor dele!
 
 Informe o valor do animal: """
+
+MENU_GERENCIAR_ANIMAL = """
+[1] Ver cuidados cadastrados
+[2] Adicionar novo cuidado
+[3] Voltar ao menu principal
+
+Qual opção você deseja: """

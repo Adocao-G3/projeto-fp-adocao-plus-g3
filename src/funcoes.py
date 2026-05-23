@@ -2,6 +2,7 @@ import src.menus as ui
 from datetime import datetime,date
 import csv
 import os 
+import random
 
 def cadastro_animal(escolha):
     if escolha == 1:      
@@ -75,29 +76,51 @@ def verificar_animal(escolha):
                             print(f"{'Estado de saúde':<20} {linha[4]}")
                             print(f"{'Comportamento':<20} {linha[5]}")
                             print(f"{'Data de chegada':<20} {linha[6]}")
-                            break
+                        
                     else:
                         print("\nMais de um animal com o mesmo nome:\n")
                         for i, animal in enumerate(animais_encontrados):
                             print(f"[{i+1}] {animal}")
-                    try:
-                        selecao_animal = int(input(ui.MENU_ESCOLHA_ANIMAL))
-                        if selecao_animal < 1 or selecao_animal > len(animais_encontrados):
-                            print("\nOpção inválida")   
-                            continue
-                        else:   
-                            linha = animais_encontrados[selecao_animal - 1] 
-                            os.system("cls")
-                            print("-" * 30)
-                            print(f"{'Nome':<20} {linha[1]}")
-                            print(f"{'Raça':<20} {linha[2]}")
-                            print(f"{'Idade':<20} {linha[3]} anos")
-                            print(f"{'Estado de saúde':<20} {linha[4]}")
-                            print(f"{'Comportamento':<20} {linha[5]}")
-                            print(f"{'Data de chegada':<20} {linha[6]}")
+                        try:
+                            selecao_animal = int(input(ui.MENU_ESCOLHA_ANIMAL))
+                            if selecao_animal < 1 or selecao_animal > len(animais_encontrados):
+                                print("\nOpção inválida")   
+                                continue
+                            else:   
+                                linha = animais_encontrados[selecao_animal - 1] 
+                                os.system("cls")
+                                print("-" * 30)
+                                print(f"{'Nome':<20} {linha[1]}")
+                                print(f"{'Raça':<20} {linha[2]}")
+                                print(f"{'Idade':<20} {linha[3]} anos")
+                                print(f"{'Estado de saúde':<20} {linha[4]}")
+                                print(f"{'Comportamento':<20} {linha[5]}")
+                                print(f"{'Data de chegada':<20} {linha[6]}")
+                        
+                        except ValueError:
+                            print("\nDigite um número válido.")
+                    
+                    funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
+
+                    gerenciar_animal = int(input(ui.MENU_GERENCIAR_ANIMAL))
+
+                    if gerenciar_animal == 1:
+                        pass
+                    elif gerenciar_animal == 2:
+                        tarefa = input("\nInforme a tarefa deseja para o animal: ")
+                        data_tarefa = input("\nInforme a data para a tarefa: ")
+                        sorteado = random.choice(funcionarios)
+                        responsavel_tarefa = sorteado
+                        print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
+                        
+                        with open("data/agendamentos.csv", "a", newline = "", encoding = "utf-8") as arquivo:
+                            writer = csv.writer(arquivo)
+                            writer.writerow([tarefa,data_tarefa,responsavel_tarefa])
                             break
-                    except ValueError:
-                        print("\nDigite um número válido.")
+                    else:
+                        os.system("cls")
+                        break
+
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
 
