@@ -1,5 +1,4 @@
-id_animal,nome,raca,idade,estado_saude,comportamento,data_chegada
-22052026110107,Mateus,Golden,10,Ótimo estado,"Agitado, late muito",2026-05-22
-22052026110205,Mel,Yorkshire,8,Bem de saúde,Calma,2026-05-22
-22052026143516,Mesmonome,maltês,10,Bem,Agitado,2026-05-22
-22052026143541,Mesmonome,maltês,10,Bem,Calmo,2026-05-22
+id_animal,nome,especie,raca,idade,estado_saude,comportamento,data_chegada
+24052026195216,Mel,papagaio,lulu-da-pomerânia,8,Ótimo estado,Calmo,2026-05-24
+24052026201300,Bambam,cachorro,yorkshire,8,Ótimo estado,Calmo,2026-05-24
+24052026201432,Bambam,gato,siamês,5,Ótimo estado,Agitado,2026-05-24
