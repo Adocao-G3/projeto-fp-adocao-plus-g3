@@ -301,6 +301,67 @@ def atualizar_animal(escolha):
                     else:
                         arquivo.write(linha)
 
+def deletar_animal(escolha):
+    if escolha == 4:
+        try:
+            nome_verificacao = input("\nNome do animal: ").capitalize()
+
+            with open ("data/animais.csv", "r", encoding="utf-8") as arquivo:
+                linhas = arquivo.readlines()
+
+            animais_nome_verificacao = []
+            todas_linhas = []
+
+            for linha in linhas:
+                todas_linhas.append(linha)
+                if not linha.strip() or "id_animal" in linha:
+                    continue 
+                dados = linha.strip().split(",")
+                if nome_verificacao == dados[1]:
+                    animais_nome_verificacao.append(dados)
+                    animal_escolhido = dados
+
+            if len(animais_nome_verificacao) == 0:
+                print("\nAnimal não encontrado!")
+                return
+
+            if len(animais_nome_verificacao) != 1:
+                for i in range(len(animais_nome_verificacao)):
+                    print(f"[{i+1}] " + " | ".join(animais_nome_verificacao[i]))
+                    escolha_mesmo_nome = int(input("---> Escolha: "))
+                    animal_escolhido = animais_nome_verificacao[escolha_mesmo_nome-1]
+
+            print(f"\nINFORMAÇÕES DE {animal_escolhido[1]}:")
+            print(f"\nNome: {animal_escolhido[1]}")
+            print(f"Raça: {animal_escolhido[2]}")
+            print(f"Idade: {animal_escolhido[3]}")
+            print(f"Estado de saúde: {animal_escolhido[4]}")
+            print(f"Comportamento: {animal_escolhido[5]}")
+            print(f"Data de chegada: {animal_escolhido[6]}")
+
+            print("\nTem certeza que deseja deletar este animal?\n[1] Sim \n[2] Não")
+            confirmar = int(input("---> 1 ou 2: "))
+
+            if confirmar == 1:
+                with open("data/animais.csv", "w", newline="", encoding="utf-8") as arquivo:
+                    for linha in todas_linhas:
+                        if not linha.strip() or "id_animal" in linha:
+                            arquivo.write(linha)
+                            continue
+                        dados = linha.strip().split(",")
+                        if dados[0] == animal_escolhido[0]:
+                            continue 
+                        else:
+                            arquivo.write(linha)
+
+                print("\n\033[1;32mAnimal deletado com sucesso!\033[m")
+
+            elif confirmar == 2:
+                print("\nDeleção cancelada.")
+
+        except FileNotFoundError:
+            print("\033[1;31mNenhum animal cadastrado\033[m")
+
 def escolha_especie_animal(escolha):
     
     if escolha == "1":
