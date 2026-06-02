@@ -1,11 +1,25 @@
 MENU_PRINCIPAL = """
+           _________
+          //////////\\
+         /╔═════════╗\\
+          ║ ADOÇÃO+ ║
+          ║         ║
+          ╚═════════╝
+    Onde o amor ganha um lar
+_______________________________
+    
 [1] Adicionar animais
 [2] Verificar animais
 [3] Atualizar animais
 [4] Deletar animais
+_______________________________
 
 Qual opção você deseja: """
 
+TITULO_CADASTRAR_ANIMAL = """
+
+=-=-=- CADASTRAR ANIMAL =-=-=-=
+"""
 MENU_DATA_CHEGADA = """ 
 [1] Utilizar data de hoje
 [2] Digitar a data manualmente 
@@ -55,9 +69,9 @@ MENU_GERENCIAR_ANIMAL = """
 Qual opção você deseja: """
 
 MENU_OPCOES_AGENDAMENTOS = """
-[1] - Vacina
-[2] - Banho
-[3] - Consulta veterinária
-[4] - Treino 
+[1] Vacina
+[2] Banho
+[3] Consulta veterinária
+[4] Treino 
 
 Oque você deseja agendar: """
