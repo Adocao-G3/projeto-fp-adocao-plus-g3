@@ -4,8 +4,10 @@ import os
 import random
 
 def cadastro_animal(escolha):
-    if escolha == 1:      
-        nome_animal = input("\nDigite o nome do animal: ").capitalize()
+    if escolha == 1: 
+        os.system('cls')     
+        print(ui.TITULO_CADASTRAR_ANIMAL)
+        nome_animal = input("Digite o nome do animal: ").capitalize()
         escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
         especie_animal = escolha_especie_animal(escolha_especie)
         raca_animal = input("\nDigite a raça do animal: ").lower()
