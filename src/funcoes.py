@@ -578,3 +578,33 @@ def deletar_animal(escolha):
 
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
+
+def excluir_data_passada():
+    data_hoje = date.today()
+    print(data_hoje) 
+    
+    linhas_validas = []
+
+    with open ("data/agendamentos.csv", "r", encoding = "utf-8") as arquivo:
+        
+        linhas_validas.append(arquivo.readline())
+        next(arquivo)
+        
+        for linha in arquivo: 
+            linha = linha.strip()
+            dados = linha.split(",")
+            data = dados[3]
+            data_formatada = datetime.strptime(data, "%d/%m/%Y").date()
+
+            if data_formatada >= data_hoje:
+                linhas_validas.append(linha + "\n")
+    
+    with open ("data/agendamentos.csv", "w", encoding = "utf-8") as arquivo:
+        arquivo.writelines(linhas_validas)
+        
+
+
+        
+
+
+                
