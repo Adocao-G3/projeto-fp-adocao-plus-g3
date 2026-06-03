@@ -3,6 +3,9 @@ from datetime import datetime, date
 import os 
 import random
 
+funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
+_rodada = []
+
 def cadastro_animal(escolha):
     if escolha == 1:      
         nome_animal = input("\nDigite o nome do animal: ").capitalize()
@@ -120,7 +123,6 @@ def verificar_animal(escolha):
                         except ValueError:
                             print("\nDigite um número válido.")
                     
-                    funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
                     gerenciar_animal = int(input(ui.MENU_GERENCIAR_ANIMAL))
 
                     if gerenciar_animal == 1:
@@ -190,8 +192,13 @@ def verificar_animal(escolha):
                             else:
                                 print("\nA data deve seguir o padrão dia/mês/ano (XX/XX/XXXX): ")
 
-                        sorteado = random.choice(funcionarios)
-                        responsavel_tarefa = sorteado
+                        global _rodada
+                        if not _rodada:
+                            _rodada = funcionarios[:]
+                            random.shuffle(_rodada)
+                            print("\nNova rodada de sorteio iniciada!")
+                        responsavel_tarefa = _rodada.pop()
+                        
                         print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
                         
                         with open("data/agendamentos.csv", "a", encoding = "utf-8") as arquivo:
