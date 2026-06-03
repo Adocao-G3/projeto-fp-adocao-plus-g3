@@ -68,7 +68,7 @@ def verificar_animal(escolha):
     if escolha == 2:
         os.system("cls")
         try:
-            with open("data/animais.csv", "r", encoding = "utf-8") as arquivo:
+            with open("data/animais.csv", "r", encoding = "utf-8-sig") as arquivo:
                 linhas = arquivo.readlines()
                 
                 nome_verificacao = input("\nQual o nome do animal: ").lower().capitalize()
@@ -128,11 +128,11 @@ def verificar_animal(escolha):
                     gerenciar_animal = int(input(ui.MENU_GERENCIAR_ANIMAL))
 
                     if gerenciar_animal == 1:
-                        if not os.path.exists("data/agendamentos.csv"):
+                        if not os.path.exists("data/agendamentos.csv") or os.path.getsize("data/agendamentos.csv") == 0:
                             with open("data/agendamentos.csv", "w", encoding="utf-8") as arquivo:
                                 arquivo.write("id_animal,nome_animal,tarefa,data,responsavel\n")
                         try:
-                            with open("data/agendamentos.csv", "r", encoding = "utf-8") as arquivo:
+                            with open("data/agendamentos.csv", "r", encoding = "utf-8-sig") as arquivo:
                                 agendamentos = arquivo.readlines()
                                 
                                 agendamentos_encontrados = []
@@ -141,7 +141,8 @@ def verificar_animal(escolha):
                                     if not agendamento.strip():
                                         continue
                                     dados_ag = agendamento.strip().split(",")
-                                    if dados_ag[0] == animal_selecionado[0]:
+                                    id_agendamento = dados_ag[0].strip().lstrip("\ufeff")
+                                    if id_agendamento == animal_selecionado[0]:
                                         agendamentos_encontrados.append(dados_ag)
                                             
                                 if agendamentos_encontrados:
@@ -588,25 +589,34 @@ def deletar_animal(escolha):
 
 def excluir_data_passada():
     data_hoje = date.today()
-    print(data_hoje) 
-    
+    print(data_hoje)
+
+    if not os.path.exists("data/agendamentos.csv"):
+        with open("data/agendamentos.csv", "w", encoding="utf-8") as arquivo:
+            arquivo.write("id_animal,nome_animal,tarefa,data,responsavel\n")
+        print("Nenhum agendamento cadastrado ainda.")
+        return
+
     linhas_validas = []
 
-    with open ("data/agendamentos.csv", "r", encoding = "utf-8") as arquivo:
-        
-        linhas_validas.append(arquivo.readline())
-        next(arquivo)
-        
-        for linha in arquivo: 
+    with open("data/agendamentos.csv", "r", encoding="utf-8-sig") as arquivo:
+        cabecalho = arquivo.readline()
+        if not cabecalho.strip():
+            return
+        linhas_validas.append(cabecalho)
+
+        for linha in arquivo:
             linha = linha.strip()
+            if not linha:
+                continue
             dados = linha.split(",")
             data = dados[3]
             data_formatada = datetime.strptime(data, "%d/%m/%Y").date()
 
             if data_formatada >= data_hoje:
                 linhas_validas.append(linha + "\n")
-    
-    with open ("data/agendamentos.csv", "w", encoding = "utf-8") as arquivo:
+
+    with open("data/agendamentos.csv", "w", encoding="utf-8") as arquivo:
         arquivo.writelines(linhas_validas)
         
 
