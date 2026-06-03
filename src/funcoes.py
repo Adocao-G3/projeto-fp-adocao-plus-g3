@@ -148,8 +148,21 @@ def verificar_animal(escolha):
                                 if agendamentos_encontrados:
                                     os.system("cls")
                                     for ag in agendamentos_encontrados:
-                                        print(f"\nTarefa: {ag[2]} | Data: {ag[3]} | Responsável: {ag[4]}")
-                                    print("-" * 40)
+                                        data_str = ag[3]
+                                        hoje = date.today()
+                                        dia, mes, ano = data_str.split("/")
+                                        data_agendamento = date(int(ano), int(mes), int(dia))
+                                        dias_restantes = (data_agendamento - hoje).days
+                                    
+
+                                    print(f"  \nTarefa: {ag[2]} | Data: {ag[3]} - Dias restantes: {dias_restantes} | Responsável: {ag[4]}")
+                                    print("-" * 85)
+                                    if dias_restantes == 0:
+                                        print(f"🔔 HOJE é o dia do agendamento!")
+                                    elif dias_restantes > 0:
+                                        print(f"🟢 Faltam {dias_restantes} dia(s).")
+                                    else:
+                                        print(f"❌ Nenhum agendamento encontrado para este animal.")
                                     print(f"{'Nome':<20} {animal_selecionado[1]}")
                                     print(f"{'Raça':<20} {animal_selecionado[3]}")
                                     print(f"{'Idade':<20} {animal_selecionado[4]} anos")
@@ -157,6 +170,7 @@ def verificar_animal(escolha):
                                     print(f"{'Comportamento':<20} {animal_selecionado[6]}")
                                     ano,mes,dia = animal_selecionado[7].split("-")
                                     print(f"{'Data de chegada':<20} {dia}/{mes}/{ano}")
+
                                     break   
                                 else:
                                     os.system("cls")
@@ -625,3 +639,4 @@ def excluir_data_passada():
 
 
                 
+
