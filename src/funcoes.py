@@ -594,18 +594,14 @@ def excluir_data_passada():
             linha = linha.strip()
             dados = linha.split(",")
             data = dados[3]
-            print("Data", data)
             data_formatada = datetime.strptime(data, "%d/%m/%Y").date()
 
             if data_formatada >= data_hoje:
-                print("Data válida.", data)
                 linhas_validas.append(linha + "\n")
-            else:
-                print("Data inválida.", data)
     
     with open ("data/agendamentos.csv", "w", encoding = "utf-8") as arquivo:
         arquivo.writelines(linhas_validas)
-        print("Datas deletadas com sucesso!")
+        
 
 
         
