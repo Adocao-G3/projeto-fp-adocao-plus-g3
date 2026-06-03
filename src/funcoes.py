@@ -600,8 +600,6 @@ def deletar_animal(escolha):
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
 
-<<<<<<< HEAD
-=======
 def excluir_data_passada():
     data_hoje = date.today()
     print(data_hoje) 
@@ -631,4 +629,4 @@ def excluir_data_passada():
 
 
                 
->>>>>>> af19a5876cfe894133ca4322a71e9bb464554d34
+
