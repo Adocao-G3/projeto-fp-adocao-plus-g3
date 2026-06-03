@@ -3,9 +3,14 @@ from datetime import datetime, date
 import os 
 import random
 
+funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
+_rodada = []
+
 def cadastro_animal(escolha):
-    if escolha == 1:      
-        nome_animal = input("\nDigite o nome do animal: ").capitalize()
+    if escolha == 1: 
+        os.system('cls')     
+        print(ui.TITULO_CADASTRAR_ANIMAL)
+        nome_animal = input("Digite o nome do animal: ").capitalize()
         escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
         especie_animal = escolha_especie_animal(escolha_especie)
         raca_animal = input("\nDigite a raça do animal: ").lower()
@@ -120,7 +125,6 @@ def verificar_animal(escolha):
                         except ValueError:
                             print("\nDigite um número válido.")
                     
-                    funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","Maria Giulia", "Jullya Medeiros"]
                     gerenciar_animal = int(input(ui.MENU_GERENCIAR_ANIMAL))
 
                     if gerenciar_animal == 1:
@@ -204,8 +208,13 @@ def verificar_animal(escolha):
                             else:
                                 print("\nA data deve seguir o padrão dia/mês/ano (XX/XX/XXXX): ")
 
-                        sorteado = random.choice(funcionarios)
-                        responsavel_tarefa = sorteado
+                        global _rodada
+                        if not _rodada:
+                            _rodada = funcionarios[:]
+                            random.shuffle(_rodada)
+                            print("\nNova rodada de sorteio iniciada!")
+                        responsavel_tarefa = _rodada.pop()
+                        
                         print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
                         
                         with open("data/agendamentos.csv", "a", encoding = "utf-8") as arquivo:
@@ -591,3 +600,35 @@ def deletar_animal(escolha):
         except FileNotFoundError:
             print("\033[1;31mNenhum animal cadastrado\033[m")
 
+<<<<<<< HEAD
+=======
+def excluir_data_passada():
+    data_hoje = date.today()
+    print(data_hoje) 
+    
+    linhas_validas = []
+
+    with open ("data/agendamentos.csv", "r", encoding = "utf-8") as arquivo:
+        
+        linhas_validas.append(arquivo.readline())
+        next(arquivo)
+        
+        for linha in arquivo: 
+            linha = linha.strip()
+            dados = linha.split(",")
+            data = dados[3]
+            data_formatada = datetime.strptime(data, "%d/%m/%Y").date()
+
+            if data_formatada >= data_hoje:
+                linhas_validas.append(linha + "\n")
+    
+    with open ("data/agendamentos.csv", "w", encoding = "utf-8") as arquivo:
+        arquivo.writelines(linhas_validas)
+        
+
+
+        
+
+
+                
+>>>>>>> af19a5876cfe894133ca4322a71e9bb464554d34
