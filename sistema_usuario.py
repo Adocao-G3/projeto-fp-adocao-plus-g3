@@ -3,7 +3,6 @@ import src.funcoes as fn
 import os
 os.system("cls")
 
-fn.excluir_data_passada()
 
 while True:
     inicio = input("Digite enter para começar ")
