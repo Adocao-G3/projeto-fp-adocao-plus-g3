@@ -1,13 +1,13 @@
 import src.menus as ui
 import src.funcoes as fn
 import os
-os.system("cls")
+os.system("cls" if os.name == "nt" else "clear")
 
 while True:
     inicio = input("Digite enter para começar ")
 
     if inicio == "":
-        os.system("cls")
+        os.system("cls" if os.name == "nt" else "clear")
         escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
         
         animais = fn.verificar_especie(escolha_especie)
@@ -38,4 +38,4 @@ while True:
             break
     
     else:
-        os.system("cls")
+        os.system("cls" if os.name == "nt" else "clear")
