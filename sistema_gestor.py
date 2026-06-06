@@ -1,7 +1,7 @@
 import src.menus as ui
 import src.funcoes as fn
 import os
-os.system("cls")
+os.system("cls" if os.name == "nt" else "clear")
 
 fn.excluir_data_passada()
 
@@ -19,10 +19,10 @@ while True:
         print("\033[1;31mOpção inválida\033[m")
     opcao = int(input(ui.MENU_SAIDA))
     if opcao == 1:
-        os.system("cls")
+        os.system("cls" if os.name == "nt" else "clear")
         continue
     elif opcao == 2:
-        os.system("cls")
+        os.system("cls" if os.name == "nt" else "clear")
         print("\n\033[1;31mProgama encerrado!\033[m")
         break
     else:

@@ -33,9 +33,8 @@ MENU_SAIDA = """
 Qual opção você deseja: """
 
 MENU_ESCOLHA_ANIMAL = """
-Para escolher o animal desejado escolha o valor dele!
 
-Informe o valor do animal: """
+Qual animal deseja vizualizar: """
 
 MENU_COMPORTAMENTO = """
 [1] Agitado
