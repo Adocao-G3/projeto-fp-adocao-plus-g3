@@ -31,12 +31,32 @@ while True:
                     pergunta_idade = input("\n[1] Sim \n[2] Não \n\nVocê tem preferência de idade do animal? ")
 
                     animais = fn.verificar_idade(animais, pergunta_idade)
-
-                    if animais != False:
-                        pergunta_comportamento = input(ui.MENU_ESCOLHA_COMPORTAMENTO)
-
-                        fn.verificar_comportamento(animais, pergunta_comportamento)
+                    
+                    if animais == None:
                         break
+
+                    else:
+                        while True:
+                            pergunta_comportamento = input(ui.MENU_ESCOLHA_COMPORTAMENTO)
+                            
+                            resultado = fn.verificar_comportamento(animais, pergunta_comportamento)
+
+                            if resultado == False:
+                                continue
+
+                            elif resultado == None:
+                                break
+
+                            else:
+                                break
+                            
+                        if resultado == None:
+                            break
+
+                        else:
+                            break
+                    
+        break
     
     else:
         os.system("cls" if os.name == "nt" else "clear")
