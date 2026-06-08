@@ -257,6 +257,69 @@ def verificar_animal(escolha):
             os.system("cls" if os.name == "nt" else "clear")
             print("\n\033[1;31mNenhum animal cadastrado\033[m")
 
+def atualizar_animal(escolha):
+    if escolha == 3:
+        os.system("cls" if os.name == "nt" else "clear")
+        nome_verificacao = input("\nNome do animal: ").capitalize()
+
+        with open("data/animais.csv", "r", encoding="utf-8") as arquivo:
+            linhas = arquivo.readlines()
+
+        animais_nome_verificacao = []
+        todas_linhas = []
+        animal_escolhido = None
+
+        for linha in linhas:
+            todas_linhas.append(linha)
+
+            if not linha.strip() or "id_animal" in linha:
+                continue
+
+            dados = linha.split(",")
+
+            if nome_verificacao == dados[1]:
+                animais_nome_verificacao.append(dados)
+                animal_escolhido = dados
+
+        if animal_escolhido is None or len(animais_nome_verificacao) == 0:
+            print("\nAnimal não encontrado!")
+            return
+
+        if len(animais_nome_verificacao) != 1:
+            for i in range(len(animais_nome_verificacao)):
+                print(f"[{i+1}] " + " | ".join(animais_nome_verificacao[i]))
+
+            try:
+                escolha_mesmo_nome = int(input("---> Escolha: "))
+                if not 1 <= escolha_mesmo_nome <= len(animais_nome_verificacao):
+                    print("\nOpção inválida!")
+                    return
+            except ValueError:
+                print("\nDigite um número válido!")
+                return
+
+            animal_escolhido = animais_nome_verificacao[escolha_mesmo_nome - 1]
+
+        resultado = editar_info(animal_escolhido)
+        if resultado == False:
+            return False
+        
+        if resultado is not None:
+            animal_escolhido = resultado
+
+        with open("data/animais.csv", "w", encoding="utf-8") as arquivo:
+            for linha in todas_linhas:
+                if not linha.strip() or "id_animal" in linha:
+                    arquivo.write(linha)
+                    continue
+
+                dados = linha.split(",")
+
+                if dados[0] == animal_escolhido[0]:
+                    arquivo.write(",".join(map(str, animal_escolhido)) + "\n")
+                else:
+                    arquivo.write(linha)
+
 def editar_info(animal_escolhido):
     while True:
         os.system("cls" if os.name == "nt" else "clear")
@@ -332,73 +395,11 @@ def editar_info(animal_escolhido):
         elif escolha_quero_editar_mais == "2":
             break
 
-def atualizar_animal(escolha):
-    if escolha == 3:
-        os.system("cls" if os.name == "nt" else "clear")
-        nome_verificacao = input("\nNome do animal: ").capitalize()
-
-        with open("data/animais.csv", "r", encoding="utf-8") as arquivo:
-            linhas = arquivo.readlines()
-
-        animais_nome_verificacao = []
-        todas_linhas = []
-        animal_escolhido = None
-
-        for linha in linhas:
-            todas_linhas.append(linha)
-
-            if not linha.strip() or "id_animal" in linha:
-                continue
-
-            dados = linha.split(",")
-
-            if nome_verificacao == dados[1]:
-                animais_nome_verificacao.append(dados)
-                animal_escolhido = dados
-
-        if animal_escolhido is None or len(animais_nome_verificacao) == 0:
-            print("\nAnimal não encontrado!")
-            return
-
-        if len(animais_nome_verificacao) != 1:
-            for i in range(len(animais_nome_verificacao)):
-                print(f"[{i+1}] " + " | ".join(animais_nome_verificacao[i]))
-
-            try:
-                escolha_mesmo_nome = int(input("---> Escolha: "))
-                if not 1 <= escolha_mesmo_nome <= len(animais_nome_verificacao):
-                    print("\nOpção inválida!")
-                    return
-            except ValueError:
-                print("\nDigite um número válido!")
-                return
-
-            animal_escolhido = animais_nome_verificacao[escolha_mesmo_nome - 1]
-
-        resultado = editar_info(animal_escolhido)
-        if resultado == False:
-            return False
-        
-        if resultado is not None:
-            animal_escolhido = resultado
-
-        with open("data/animais.csv", "w", encoding="utf-8") as arquivo:
-            for linha in todas_linhas:
-                if not linha.strip() or "id_animal" in linha:
-                    arquivo.write(linha)
-                    continue
-
-                dados = linha.split(",")
-
-                if dados[0] == animal_escolhido[0]:
-                    arquivo.write(",".join(map(str, animal_escolhido)) + "\n")
-                else:
-                    arquivo.write(linha)
-
 def verificar_especie(escolha):
-
+    
     if not escolha in especies:
-        print("\nOpção inválida!")
+        os.system("cls" if os.name == "nt" else "clear")
+        print("\nOpção inválida, digite novamente!")
         return False
 
     especie = especies[escolha]
@@ -418,8 +419,23 @@ def verificar_especie(escolha):
             especies_encontradas.append(linha)
 
     if len(especies_encontradas) == 0:
+        os.system("cls" if os.name == "nt" else "clear")
         print("\nInfelizmente não temos nenhum animal dessa especie no momento!")
-        return False
+        
+        while True:
+            pergunta = input("\n[1] Sim \n[2] Não \n\nVocê deseja buscar por outra espécie? ")
+
+            if pergunta == "1":
+                os.system("cls" if os.name == "nt" else "clear")
+                return False
+            elif pergunta == "2":
+                os.system("cls" if os.name == "nt" else "clear")
+                return None
+            else:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nOpção inválida, digite novamente!")
+                continue
+        
     else:
         os.system("cls" if os.name == "nt" else "clear")
         return especies_encontradas
@@ -431,38 +447,64 @@ def verificar_raca(animais, pergunta):
         
         racas_disponiveis = []
         cont = 1
+        while True:
+            for animal in animais:
+                dados = animal.split(",")
+                if not dados[3] in racas_disponiveis:
+                    print(f"[{cont}] {dados[3]}")
+                    racas_disponiveis.append(dados[3])
+                    cont += 1
+            try:
+                raca = input("\nDigite a raça do animal desejada (digite N para nenhuma): ").strip().lower()
 
-        for animal in animais:
-            dados = animal.split(",")
-            if not dados[3] in racas_disponiveis:
-                print(f"[{cont}] {dados[3]}")
-                racas_disponiveis.append(dados[3])
-                cont += 1
-        try:
-            raca = input("\nDigite a raça do animal desejada (digite N para nenhuma): ").strip().lower()
+                if raca != "n" and raca.isdigit():
+                    racas_encontradas = []
+                    raca = racas_disponiveis[int(raca) - 1]
 
-            if raca != "n":
-                racas_encontradas = []
-                raca = racas_disponiveis[int(raca) - 1]
+                    for animal in animais:
+                        dados = animal.split(",")
+                        if dados[3] == raca:
+                            racas_encontradas.append(animal)
+                    os.system("cls" if os.name == "nt" else "clear")
+                    return racas_encontradas
+                
+                elif raca == "n":
+                    while True:
+                        os.system("cls" if os.name == "nt" else "clear")
+                        print("\nInfelizmente não temos mais raças disponíveis no momento")
+                        escolha = input("\n[1] Sim \n[2] Não \n\nVocê deseja buscar por outra raça? ")
 
-                for animal in animais:
-                    dados = animal.split(",")
-                    if dados[3] == raca:
-                        racas_encontradas.append(animal)
+                        if escolha == "1":
+                            break
+                        elif escolha == "2":
+                            break
+                        else:
+                            os.system("cls" if os.name == "nt" else "clear")
+                            print("\nOpção inválida, digite novamente!")
+                            continue
+                    
+                    if escolha == "1":
+                            os.system("cls" if os.name == "nt" else "clear")
+                            racas_disponiveis = []
+                            cont = 1
+                            continue
+                    elif escolha == "2":
+                            os.system("cls" if os.name == "nt" else "clear")
+                            return None
+                
+                else:
+                    os.system("cls" if os.name == "nt" else "clear")
+                    print("Digite um valor válido\n")
+                    racas_disponiveis = []
+                    cont = 1
+                    continue
 
-                if len(racas_encontradas) == 0:
-                    print("\nRaça não encontrada!")
-                    return False
-
+            except IndexError:
                 os.system("cls" if os.name == "nt" else "clear")
-                return racas_encontradas
-            else:
-                print("\nInfelizmente não temos mais raças disponíveis no momento")
-                return False
-        
-        except ValueError:
-            print("\nDigite um valor válido")
-            return False
+                print("Digite um valor válido\n")
+                racas_disponiveis = []
+                cont = 1
+                continue
 
     else:
         os.system("cls" if os.name == "nt" else "clear")
