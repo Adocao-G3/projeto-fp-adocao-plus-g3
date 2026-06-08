@@ -1,41 +1,62 @@
 import src.menus as ui
 import src.funcoes as fn
 import os
-os.system("cls")
+os.system("cls" if os.name == "nt" else "clear")
 
 while True:
     inicio = input("Digite enter para começar ")
 
     if inicio == "":
-        os.system("cls")
-        escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
-        
-        animais = fn.verificar_especie(escolha_especie)
-
-        if animais != False:
-            pergunta_raca = input("\n[1] Sim \n[2] Não \n\nVocê deseja procurar por uma raça específica? ")
+        os.system("cls" if os.name == "nt" else "clear")
+        while True:
+            escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
             
-            animais = fn.verificar_raca(animais, pergunta_raca)
+            animais = fn.verificar_especie(escolha_especie)
+            
+            if animais == False:
+                continue
 
-            if animais != False:
-                pergunta_idade = input("\n[1] Sim \n[2] Não \n\nVocê tem preferência de idade do animal? ")
+            elif animais == None:
+                break
 
-                animais = fn.verificar_idade(animais, pergunta_idade)
+            else:
+                pergunta_raca = input("\n[1] Sim \n[2] Não \n\nVocê deseja procurar por uma raça específica? ")
+                
+                animais = fn.verificar_raca(animais, pergunta_raca)
 
-                if animais != False:
-                    pergunta_comportamento = input(ui.MENU_ESCOLHA_COMPORTAMENTO)
-
-                    fn.verificar_comportamento(animais, pergunta_comportamento)
+                if animais == None:
                     break
 
                 else:
-                    break
+                    pergunta_idade = input("\n[1] Sim \n[2] Não \n\nVocê tem preferência de idade do animal? ")
 
-            else:
-                break
-            
-        else:
-            break
+                    animais = fn.verificar_idade(animais, pergunta_idade)
+                    
+                    if animais == None:
+                        break
+
+                    else:
+                        while True:
+                            pergunta_comportamento = input(ui.MENU_ESCOLHA_COMPORTAMENTO)
+                            
+                            resultado = fn.verificar_comportamento(animais, pergunta_comportamento)
+
+                            if resultado == False:
+                                continue
+
+                            elif resultado == None:
+                                break
+
+                            else:
+                                break
+                            
+                        if resultado == None:
+                            break
+
+                        else:
+                            break
+                    
+        break
     
     else:
-        os.system("cls")
+        os.system("cls" if os.name == "nt" else "clear")

@@ -1,11 +1,25 @@
 MENU_PRINCIPAL = """
+           _________
+          //////////\\
+         /╔═════════╗\\
+          ║ ADOÇÃO+ ║
+          ║         ║
+          ╚═════════╝
+    Onde o amor ganha um lar
+_______________________________
+    
 [1] Adicionar animais
 [2] Verificar animais
 [3] Atualizar animais
 [4] Deletar animais
+_______________________________
 
 Qual opção você deseja: """
 
+TITULO_CADASTRAR_ANIMAL = """
+
+=-=-=- CADASTRAR ANIMAL =-=-=-=
+"""
 MENU_DATA_CHEGADA = """ 
 [1] Utilizar data de hoje
 [2] Digitar a data manualmente 
@@ -19,15 +33,13 @@ MENU_SAIDA = """
 Qual opção você deseja: """
 
 MENU_ESCOLHA_ANIMAL = """
-Para escolher o animal desejado escolha o valor dele!
 
-Informe o valor do animal: """
+Qual animal deseja vizualizar: """
 
 MENU_COMPORTAMENTO = """
 [1] Agitado
 [2] Calmo
 [3] Neutro
-[4] Agressivo
 
 Informe o comportamento do animal: """
 
@@ -35,9 +47,9 @@ MENU_ESPECIE_ANIMAL = """
 [1] Cachorro
 [2] Gato
 [3] Pássaro
-[4] Reptil
+[4] Réptil
 
-Informe a espécie do animal desejado: """
+Informe a espécie do animal: """
 
 MENU_ESCOLHA_COMPORTAMENTO = """
 [1] Agitado
@@ -55,9 +67,16 @@ MENU_GERENCIAR_ANIMAL = """
 Qual opção você deseja: """
 
 MENU_OPCOES_AGENDAMENTOS = """
-[1] - Vacina
-[2] - Banho
-[3] - Consulta veterinária
-[4] - Treino 
+[1] Vacina
+[2] Banho
+[3] Consulta veterinária
+[4] Treino 
 
 Oque você deseja agendar: """
+
+MENU_ESTADO_SAUDE = """
+[1] Bom
+[2] Médio
+[3] Ruim
+
+Digite o estado de saúde do animal: """
