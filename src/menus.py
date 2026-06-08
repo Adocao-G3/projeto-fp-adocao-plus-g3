@@ -40,7 +40,6 @@ MENU_COMPORTAMENTO = """
 [1] Agitado
 [2] Calmo
 [3] Neutro
-[4] Agressivo
 
 Informe o comportamento do animal: """
 
@@ -48,9 +47,9 @@ MENU_ESPECIE_ANIMAL = """
 [1] Cachorro
 [2] Gato
 [3] Pássaro
-[4] Reptil
+[4] Réptil
 
-Informe a espécie do animal desejado: """
+Informe a espécie do animal: """
 
 MENU_ESCOLHA_COMPORTAMENTO = """
 [1] Agitado
@@ -74,3 +73,10 @@ MENU_OPCOES_AGENDAMENTOS = """
 [4] Treino 
 
 Oque você deseja agendar: """
+
+MENU_ESTADO_SAUDE = """
+[1] Bom
+[2] Médio
+[3] Ruim
+
+Digite o estado de saúde do animal: """
