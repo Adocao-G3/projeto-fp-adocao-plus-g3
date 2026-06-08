@@ -8,11 +8,13 @@ fn.excluir_data_passada()
 while True:
     escolha = int(input(ui.MENU_PRINCIPAL))
     if escolha == 1:
-        fn.cadastro_animal(escolha)
+        if fn.cadastro_animal(escolha) == False:
+            break
     elif escolha == 2:
         fn.verificar_animal(escolha)
     elif escolha == 3:
-        fn.atualizar_animal(escolha)
+        if fn.atualizar_animal(escolha) == False:
+            break
     elif escolha == 4:
         fn.deletar_animal(escolha)
     else:
