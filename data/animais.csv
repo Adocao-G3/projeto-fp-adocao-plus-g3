@@ -1,7 +1,4 @@
 id_animal,nome,especie,raca,idade,estado_saude,comportamento,data_chegada
-24052026195216,Mel2,pássaro,papagaio,8,bom,calmo,2026-05-24
-24052026201300,Bambam,cachorro,yorkshire,8,bom,calmo,2026-05-24
-24052026201432,Bambam,gato,siamês,5,bom,agitado,2026-05-24
-03062026174339,Slink,cachorro,yorkshire,10,bom,agitado,2026-06-03
-03062026174444,Slink,cachorro,golden,10,bom,agitado,2026-06-03
-08062026012542,Grag,réptil,lagarto,22,bom,calmo,2026-06-09
+08062026130549,João Souza,gato,siâmes,10,bom,calmo,2026-06-08
+08062026143904,Mel,cachorro,yorkshire,10,bom,agitado,2026-06-08
+08062026143938,Mel,cachorro,cocs,8,bom,agitado,2026-w0-08
