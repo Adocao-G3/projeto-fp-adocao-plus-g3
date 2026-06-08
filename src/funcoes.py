@@ -27,55 +27,83 @@ comportamentos = {
 
 def cadastro_animal(escolha):
     if escolha == 1: 
-        os.system('cls')     
+        os.system("cls" if os.name == "nt" else "clear")   
         print(ui.TITULO_CADASTRAR_ANIMAL)
         nome_animal = input("Digite o nome do animal: ").title()
+        os.system("cls" if os.name == "nt" else "clear")
         
-        escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
-        if not escolha_especie in especies:
-            print("\nOpção inválida!")
-            return False
+        while True:
+            escolha_especie = input(ui.MENU_ESPECIE_ANIMAL)
+            if not escolha_especie in especies:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nOpção inválida, digite novamente!")
+                continue
+            else:
+                break
         
         especie_animal = especies[escolha_especie]
+        os.system("cls" if os.name == "nt" else "clear")
         raca_animal = input("\nDigite a raça do animal: ").lower()
-        
-        try:
-            idade_animal = int(input("\nDigite a idade do animal: "))
-        except ValueError:
-            print("Valor inválido!")
-            return False
+        os.system("cls" if os.name == "nt" else "clear")
 
-        escolha_estado_saude = input(ui.MENU_ESTADO_SAUDE)
-        if not escolha_estado_saude in estados_saude:
-            print("\nOpção inválida!")
-            return False
-        
-        estado_saude_animal = estados_saude[escolha_estado_saude]
+        while True:
+            try:
+                idade_animal = int(input("\nDigite a idade do animal: "))
+                break
+            except ValueError:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("Valor inválido, digite novamente.")
+                continue
             
-        escolha_comportamento = input(ui.MENU_COMPORTAMENTO)
-        if not escolha_comportamento in comportamentos:
-            print("\nOpção inválida!")
-            return False
+        os.system("cls" if os.name == "nt" else "clear")
+        while True:
+            escolha_estado_saude = input(ui.MENU_ESTADO_SAUDE)
+            if not escolha_estado_saude in estados_saude:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nOpção inválida!")
+                continue
+            else:
+                os.system("cls" if os.name == "nt" else "clear")
+                break
+            
+        estado_saude_animal = estados_saude[escolha_estado_saude]
+        
+        while True:      
+            escolha_comportamento = input(ui.MENU_COMPORTAMENTO)
+            if not escolha_comportamento in comportamentos:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nOpção inválida!")
+                continue
+            else:
+                os.system("cls" if os.name == "nt" else "clear")
+                break
         
         comportamento_animal = comportamentos[escolha_comportamento]
 
-        
         while True:
             chegada_animal = int(input(ui.MENU_DATA_CHEGADA))
             if chegada_animal == 1:
+                os.system("cls" if os.name == "nt" else "clear")
                 data_hoje = date.today()
                 data_chegada = data_hoje.strftime("%Y-%m-%d")
                 id_animal = datetime.now().strftime("%d%m%Y%H%M%S")
+                os.system("cls" if os.name == "nt" else "clear")
                 break
 
             elif chegada_animal == 2:
+                os.system("cls" if os.name == "nt" else "clear")
+
                 while True:
-                    data_final = input("Digite a data (DD/MM/AAAA): ")
-                    id_animal = data_final.replace("/","")
-                    if not id_animal.isdigit() or len(id_animal) != 8:
-                        print("\nData inválida.")
+                    data_final = input("Digite a data (DD/MM/AAAA): ").strip()
+                    if data_final.isdigit() or len(data_final) != 10:
+                        os.system("cls" if os.name == "nt" else "clear")
+                        print("\nFormato da data inválido.\n")
                         continue
                     dia,mes,ano = data_final.split("/")
+                    if not dia.isdigit() or mes.isdigit() or ano.isdigit():
+                        os.system("cls" if os.name == "nt" else "clear")
+                        print("Formato da data inválido.\n")
+                        continue
                     data_chegada = f"{ano}-{mes}-{dia}"
                     id_animal = datetime.now().strftime("%d%m%Y%H%M%S")
                     break
@@ -98,7 +126,7 @@ def verificar_animal(escolha):
             with open("data/animais.csv", "r", encoding = "utf-8-sig") as arquivo:
                 linhas = arquivo.readlines()
                 
-                nome_verificacao = input("\nQual o nome do animal: ").capitalize()
+                nome_verificacao = input("\nQual o nome do animal: ").title()
                 os.system("cls" if os.name == "nt" else "clear")
 
                 animais_encontrados = []
@@ -144,9 +172,9 @@ def verificar_animal(escolha):
                     print(f"{"=" * 36}")
                     print(f"{"Raça":<20} {dados[3].capitalize()}")
                     print(f"{"Idade":<20} {dados[4]} anos")
-                    print(f"{"Estado de saúde":<20} {dados[5]}")
-                    print(f"{"Comportamento":<20} {dados[6]}")
-                    ano, mes, dia = dados[7].split("-")
+                    print(f"{"Estado de saúde":<20} {dados[5].capitalize()}")
+                    print(f"{"Comportamento":<20} {dados[6].capitalize()}")
+                    ano, mes, dia = dados[7].strip().split("-")
                     print(f"{"Data de chegada":<20} {dia}/{mes}/{ano}")
                     print("=" * 36)
 
@@ -213,7 +241,6 @@ def verificar_animal(escolha):
                             if not _rodada:
                                 _rodada = funcionarios[:]
                                 random.shuffle(_rodada)
-                                print("\nNova rodada de sorteio iniciada!")
                             responsavel_tarefa = _rodada.pop()
                             print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
                             with open("data/agendamentos.csv", "a", encoding = "utf-8") as arquivo:
@@ -260,7 +287,7 @@ def editar_info(animal_escolhido):
         
         elif info_quer_editar == 3:
             print(f"\nRaça atual: {animal_escolhido[3]}")
-            nova_raca = input("Nova raça: ").strip()
+            nova_raca = input("Nova raça: ").strip().lower()
             animal_escolhido[3] = nova_raca
         
         elif info_quer_editar == 4:
@@ -527,6 +554,7 @@ def verificar_comportamento(animais, pergunta):
 def deletar_animal(escolha):
     if escolha == 4:
         try:
+            os.system("cls" if os.name == "nt" else "clear")
             nome_verificacao = input("\nNome do animal: ").title().strip()
 
             with open("data/animais.csv", "r", encoding="utf-8") as arquivo:
@@ -546,14 +574,16 @@ def deletar_animal(escolha):
                 print("\nAnimal não encontrado!")
                 return
 
-            if len(animais_nome_verificacao) == 1:
+            elif len(animais_nome_verificacao) == 1:
                 animal_escolhido = animais_nome_verificacao[0]
+
             else:
                 for i, animal in enumerate(animais_nome_verificacao, start=1):
-                    print(f"[{i}]  |  {animal}")
+                    print(f"\n[{i}]  {animal.strip()}")
 
                 try:
-                    escolha_mesmo_nome = int(input("---> Escolha: "))
+                    escolha_mesmo_nome = int(input("\n---> Escolha: "))
+                    os.system("cls" if os.name == "nt" else "clear")
                     if not 1 <= escolha_mesmo_nome <= len(animais_nome_verificacao):
                         print("\nOpção inválida!")
                         return
@@ -562,17 +592,18 @@ def deletar_animal(escolha):
                     return
 
                 animal_escolhido = animais_nome_verificacao[escolha_mesmo_nome - 1]
+                dados = animal_escolhido.strip().split(",")
 
-            print(f"\nInformações de {animal_escolhido[1]}:")
-            print(f"\nEspécie: {animal_escolhido[2]}")
-            print(f"Raça: {animal_escolhido[3]}")
-            print(f"Idade: {animal_escolhido[4]}")
-            print(f"Estado de saúde: {animal_escolhido[5]}")
-            print(f"Comportamento: {animal_escolhido[6]}")
-            print(f"Data de chegada: {animal_escolhido[7]}")
+            print(f"\nInformações de {dados[1]}:")
+            print(f"\nEspécie: {dados[2]}")
+            print(f"Raça: {dados[3]}")
+            print(f"Idade: {dados[4]}")
+            print(f"Estado de saúde: {dados[5]}")
+            print(f"Comportamento: {dados[6]}")
+            print(f"Data de chegada: {dados[7]}")
 
             try:
-                confirmar = input("\n[1] Sim \n[2] Não\nTem certeza que deseja deletar este animal? ")
+                confirmar = input("\n[1] Sim \n[2] Não\n\nTem certeza que deseja deletar este animal? ")
             except ValueError:
                 print("\nEntrada inválida!")
                 return
@@ -584,8 +615,8 @@ def deletar_animal(escolha):
                         if not linha.strip() or "id_animal" in linha:
                             continue
                         
-                        dados = linha.split(",")
-                        if dados[0] == animal_escolhido[0]:
+                        dados_exclusao = linha.split(",")
+                        if dados_exclusao[0] == dados[0]:
                             continue
                         arquivo.write(linha)
                 print("\n\033[1;32mAnimal deletado com sucesso!\033[m")
