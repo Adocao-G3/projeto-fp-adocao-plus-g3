@@ -4,7 +4,7 @@ import os
 import random
 
 funcionarios = ["Mateus Davi","Lucas Calixto","João Vitor","João Souza","Maria Giulia", "Jullya Medeiros"]
-_rodada = []
+rodada = []
 
 especies = {
     "1": "cachorro",
@@ -168,7 +168,7 @@ def verificar_animal(escolha):
                     dados = animal_selecionado
                    
                     print(f"{"=" * 36}")
-                    print(f"{animal_selecionado[1].upper()} — {animal_selecionado[2].upper()}")
+                    print(f"{dados[1].upper()} — {dados[2].upper()}")
                     print(f"{"=" * 36}")
                     print(f"{"Raça":<20} {dados[3].capitalize()}")
                     print(f"{"Idade":<20} {dados[4]} anos")
@@ -232,16 +232,16 @@ def verificar_animal(escolha):
                                 data_verificacao = input("\nQual data você deseja, dia/mês/ano: ")
                                 data_tarefa = data_verificacao.replace("/","")
                                 if data_tarefa.isdigit() and len(data_tarefa) == 8:
-                                    data_final = data_tarefa[0:2] + "/"+ data_tarefa[2:4] + "/" + data_tarefa[4:8]
+                                    data_final = data_tarefa[0:2] + "/" + data_tarefa[2:4] + "/" + data_tarefa[4:8]
                                     break
                                 else:
                                     print("\nA data deve seguir o padrão dia/mês/ano (XX/XX/XXXX): ")
 
-                            global _rodada
-                            if not _rodada:
-                                _rodada = funcionarios[:]
-                                random.shuffle(_rodada)
-                            responsavel_tarefa = _rodada.pop()
+                            global rodada
+                            if not rodada:
+                                rodada = funcionarios[:]
+                                random.shuffle(rodada)
+                            responsavel_tarefa = rodada.pop()
                             print(f"\nO funcionário responsável pela tarefa é {responsavel_tarefa}.")
                             with open("data/agendamentos.csv", "a", encoding = "utf-8") as arquivo:
                                 arquivo.write(f"{id_tarefa},{animal_tarefa},{tarefa},{data_final},{responsavel_tarefa}\n")
