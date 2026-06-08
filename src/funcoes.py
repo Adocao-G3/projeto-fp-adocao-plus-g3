@@ -514,43 +514,66 @@ def verificar_idade(animais, pergunta):
     os.system("cls" if os.name == "nt" else "clear")
 
     if pergunta == "1":
-        try:
-            idade_min = int(input("\nDigite a idade mínima do animal (digite -1 para sem idade mínima): "))
-            idade_max = int(input("\nDigite a idade máxima do animal (digite -1 para sem idade máxima): "))
-        except ValueError:
-            print("\nDigite apenas números inteiros!")
-            return False
+        while True:
+            try:
+                idade_min = int(input("\nDigite a idade mínima do animal (digite -1 para sem idade mínima): "))
+                idade_max = int(input("\nDigite a idade máxima do animal (digite -1 para sem idade máxima): "))
+            except ValueError:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nDigite apenas números inteiros!")
+                continue
 
-        if idade_min != -1 and idade_max != -1 and idade_min > idade_max:
-            print("\nA idade mínima não pode ser maior que a máxima!")
-            return False
+            if idade_min != -1 and idade_max != -1 and idade_min > idade_max:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nA idade mínima não pode ser maior que a máxima!")
+                continue
 
-        if idade_min == -1 and idade_max == -1:
+            if idade_min == -1 and idade_max == -1:
+                os.system("cls" if os.name == "nt" else "clear")
+                return animais
+
+            idades_encontradas = []
+            for animal in animais:
+
+                dados = animal.split(",")
+                idade_animal = int(dados[4])
+
+                if idade_min == -1:
+                    if idade_animal <= idade_max:
+                        idades_encontradas.append(animal)
+                elif idade_max == -1:
+                    if idade_animal >= idade_min:
+                        idades_encontradas.append(animal)
+                else:
+                    if idade_min <= idade_animal <= idade_max:
+                        idades_encontradas.append(animal)
+
+            if len(idades_encontradas) == 0:
+                while True:
+                    os.system("cls" if os.name == "nt" else "clear")
+                    print("\nInfelizmente não temos nenhum animal nessa faixa de idade no momento!")
+                    escolha = input("\n[1] Sim \n[2] Não \n\nVocê deseja buscar por outra faixa de idade? ")
+
+                    if escolha == "1":
+                        break
+                    elif escolha == "2":
+                        break
+                    else:
+                        os.system("cls" if os.name == "nt" else "clear")
+                        print("\nOpção inválida, digite novamente!")
+                        continue
+                
+                if escolha == "1":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        idades_encontradas = []
+                        continue
+                elif escolha == "2":
+                        os.system("cls" if os.name == "nt" else "clear")
+                        return None
+                
+
             os.system("cls" if os.name == "nt" else "clear")
-            return animais
-
-        idades_encontradas = []
-        for animal in animais:
-
-            dados = animal.split(",")
-            idade_animal = int(dados[4])
-
-            if idade_min == -1:
-                if idade_animal <= idade_max:
-                    idades_encontradas.append(animal)
-            elif idade_max == -1:
-                if idade_animal >= idade_min:
-                    idades_encontradas.append(animal)
-            else:
-                if idade_min <= idade_animal <= idade_max:
-                    idades_encontradas.append(animal)
-
-        if len(idades_encontradas) == 0:
-            print("\nInfelizmente não temos nenhum animal nessa faixa de idade no momento!")
-            return False
-
-        os.system("cls" if os.name == "nt" else "clear")
-        return idades_encontradas
+            return idades_encontradas
 
     else:
         return animais
@@ -563,6 +586,7 @@ def verificar_comportamento(animais, pergunta):
     animais_encontrados = []
 
     if pergunta not in comportamentos:
+        os.system("cls" if os.name == "nt" else "clear")
         print("\nOpção inválida!")
         return False
 
@@ -579,8 +603,28 @@ def verificar_comportamento(animais, pergunta):
             animais_encontrados.append(animal)
 
     if len(animais_encontrados) == 0:
-        print("\nInfelizmente não temos nenhum animal com essas características no momento!")
-        return False
+        while True:
+            os.system("cls" if os.name == "nt" else "clear")
+            print("\nInfelizmente não temos nenhum animal com essas características no momento!")
+            escolha = input("\n[1] Sim \n[2] Não \n\nVocê deseja buscar por outra faixa de idade? ")
+
+            if escolha == "1":
+                break
+            elif escolha == "2":
+                break
+            else:
+                os.system("cls" if os.name == "nt" else "clear")
+                print("\nOpção inválida, digite novamente!")
+                continue
+        
+        if escolha == "1":
+                os.system("cls" if os.name == "nt" else "clear")
+                animais_encontrados = []
+                return False
+        elif escolha == "2":
+                os.system("cls" if os.name == "nt" else "clear")
+                return None
+            
     elif len(animais_encontrados) == 1:
         dados = animais_encontrados[0].split(",")
         print("\nEncontramos um animal que combina com as características informadas!")
